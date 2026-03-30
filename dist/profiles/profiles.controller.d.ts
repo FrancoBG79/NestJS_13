@@ -1,4 +1,5 @@
 import { CreateProfileDto } from "./dto/create-profile.dto";
+import { UpdateProfileDto } from './dto/update-profile.dto';
 export declare class ProfilesController {
     findAll(location: string): {
         location: string;
@@ -10,5 +11,10 @@ export declare class ProfilesController {
         name: string;
         description: string;
     };
-    update(): void;
+    update(id: string, updateProfileDto: UpdateProfileDto): {
+        name: string;
+        description: string;
+        id: string;
+    };
+    remove(id: string): void;
 }
