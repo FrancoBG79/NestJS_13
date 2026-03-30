@@ -31,7 +31,11 @@ let ProfilesService = class ProfilesService {
         return this.profiles;
     }
     findOne(id) {
-        return this.profiles.find(profile => profile.id === id);
+        const matchingProfile = this.profiles.find(profile => profile.id === id);
+        if (!matchingProfile) {
+            throw new Error(`Profile with id ${id} not found`);
+        }
+        return matchingProfile;
     }
     create(createProfile) {
         const newProfile = {
@@ -44,7 +48,7 @@ let ProfilesService = class ProfilesService {
     update(id, updateProfile) {
         const profileIndex = this.profiles.findIndex(profile => profile.id === id);
         if (profileIndex === -1) {
-            throw new Error('Profile not found');
+            throw new common_1.NotFoundException(`Profile with id ${id} not found`);
         }
         this.profiles[profileIndex] = { ...this.profiles[profileIndex], ...updateProfile };
         return this.findOne(id);
@@ -52,7 +56,7 @@ let ProfilesService = class ProfilesService {
     delete(id) {
         const profileIndex = this.profiles.findIndex(profile => profile.id === id);
         if (profileIndex === -1) {
-            throw new Error('Profile not found');
+            throw new common_1.NotFoundException(`Profile with id ${id} not found`);
         }
         this.profiles.splice(profileIndex, 1);
         return this.findAll();
